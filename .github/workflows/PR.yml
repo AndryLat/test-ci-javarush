@@ -17,6 +17,11 @@ jobs:
       - name: Maven Package
         run: mvn -B clean install
 
+      - name: Test Coverage
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Generate JaCoCo Badge
         id: jacoco
         uses: cicirello/jacoco-badge-generator@v2.0.1
@@ -40,10 +45,7 @@ jobs:
           name: jacoco-report
           path: target/site/jacoco/
 
-      - name: Test Coverage
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+
 
       - name: Analyze with SonarCloud
         env:
