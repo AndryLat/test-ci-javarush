@@ -1,0 +1,31 @@
+name: Push to Heroku prod
+
+on:
+  workflow_dispatch:
+    inputs:
+      message:
+        description: "write here something"
+        required: false
+      mode:
+        description: "select mode"
+        required: false
+        default: auto
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: show message
+        run: |
+          echo "Log level: ${{ github.event.inputs.message }}"
+          echo "Log level: ${{ github.event.inputs.mode }}"
+      - name: Setup Maven Action
+        uses: s4u/setup-maven-action@v1.2.1
+        with:
+          java-version: 17
+          maven-version: 3.8.2
+      - name: Maven deploy
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: mvn heroku:deploy
