@@ -2,6 +2,7 @@ package dev.andrylat.test_ci;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,6 +24,7 @@ class MathTest {
     }
 
     @Test
+    @Disabled
     void fail() {
         assertTrue(false);
     }
