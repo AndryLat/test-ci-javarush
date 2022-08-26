@@ -22,4 +22,4 @@ jobs:
           ls -l
           mvn -version
       - name: Maven Package
-        run: mvn -B clean install
+        run: mvn clean install
