@@ -186,7 +186,7 @@
                 <artifactId>heroku-maven-plugin</artifactId>
                 <version>3.0.4</version>
                 <configuration>
-                    <appName>testci-javarus</appName>
+                    <appName>test-ci-javarush</appName>
                     <processTypes>
                         <web>java -jar target/ci_javarush_server-1.0-SNAPSHOT.jar</web>
                     </processTypes>
