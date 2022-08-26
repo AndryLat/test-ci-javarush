@@ -3,32 +3,33 @@ name: Push to Heroku prod
 on:
   workflow_dispatch:
     inputs:
-      message:
-        description: "write here something"
+      prod_env:
+        description: "env"
         required: false
-      mode:
-        description: "select mode"
-        required: false
-        default: auto
+        default: heroku
   push:
     branches:
       - main
 
 jobs:
-  build:
+  prod_deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: show message
-        run: |
-          echo "Log level: ${{ github.event.inputs.message }}"
-          echo "Log level: ${{ github.event.inputs.mode }}"
+      - uses: actions/checkout@v2
       - name: Setup Maven Action
         uses: s4u/setup-maven-action@v1.2.1
         with:
           java-version: 17
           maven-version: 3.8.2
-      - name: Maven deploy
+      - name: Maven deploy to Heroku
+        if: ${{ github.event.inputs.message }} == 'heroku'
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: mvn heroku:deploy
+
+      - name: setup flyctl
+        if: ${{ github.event.inputs.message }} == 'fly.io'
+        uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: run deploy
+        if: ${{ github.event.inputs.message }} == 'fly.io'
+        run: flyctl deploy --remote-only
