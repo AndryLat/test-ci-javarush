@@ -21,4 +21,9 @@ class MathTest {
 
         Assertions.assertEquals(expected, actual);
     }
+
+    @Test
+    void fail() {
+        assertTrue(false);
+    }
 }
